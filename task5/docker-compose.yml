@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  back-end:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: softy-pinko-back-end:task5
+    container_name: task5-back-end
+    expose:
+      - "5252"
+
+  front-end:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: softy-pinko-front-end:task5
+    container_name: task5-front-end
+    expose:
+      - "9000"
+
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    image: softy-pinko-proxy:task5
+    container_name: task5-proxy
+    ports:
+      - "80:80"
+    depends_on:
+      - front-end
+      - back-end
